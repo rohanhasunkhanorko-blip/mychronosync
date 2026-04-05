@@ -32,7 +32,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html{height:100%;overflow:hidden;}
-body{height:100%;overflow:hidden;touch-action:pan-y;-webkit-overflow-scrolling:touch;}
+body{height:100%;overflow:hidden;-webkit-overflow-scrolling:touch;}
 body{
   background:var(--bg);
   color:var(--text);
@@ -415,7 +415,7 @@ nav::-webkit-scrollbar{display:none;}
 
 <nav id="nav"></nav>
 
-<div id="pages"></div>
+<div id="pages" style="display: contents;"></div>
 
 <!-- Lists page -->
 <div class="page" id="page-lists">
