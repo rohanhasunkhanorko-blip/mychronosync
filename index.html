@@ -1154,15 +1154,15 @@ document.addEventListener('touchend', e => {
   let touchEndY = e.changedTouches[0].screenY;
   
   if(Math.abs(touchEndX - touchStartX) > Math.abs(touchEndY - touchStartY) && Math.abs(touchEndX - touchStartX) > 40) {
-    if(!currentPage || !currentPage.startsWith('day-')) return;
-    let idx = DAYS.indexOf(currentPage.replace('day-',''));
+    const tabs = [...document.querySelectorAll('.nav-tab')].map(t => t.dataset.page);
+    let idx = tabs.indexOf(currentPage);
     if(idx === -1) return;
     
-    if (touchEndX < touchStartX - 40 && idx < DAYS.length-1) {
-      switchPage('day-' + DAYS[idx+1]);
+    if (touchEndX < touchStartX - 40 && idx < tabs.length-1) {
+      switchPage(tabs[idx+1]);
     }
     if (touchEndX > touchStartX + 40 && idx > 0) {
-      switchPage('day-' + DAYS[idx-1]);
+      switchPage(tabs[idx-1]);
     }
   }
 }, {passive:true});
