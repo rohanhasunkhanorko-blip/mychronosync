@@ -74,7 +74,7 @@ nav::-webkit-scrollbar{display:none;}
 }
 
 /* ── PAGES ── */
-.page{display:none;flex:1;overflow-y:auto;overflow-x:hidden;padding:14px 14px 90px;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;}
+.page{display:none;flex:1;overflow-y:auto;overflow-x:hidden;touch-action:pan-y;padding:14px 14px 90px;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;}
 .page.active{display:block;}
 
 /* ── HEADER STRIP ── */
@@ -1137,6 +1137,35 @@ function importData(e){
   };
   reader.readAsText(file);
 }
+
+// ══════════════════════════════════════
+//  SWIPE LOGIC
+// ══════════════════════════════════════
+let touchStartX = 0;
+let touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}, {passive:true});
+
+document.addEventListener('touchend', e => {
+  if (e.target.closest('nav')) return;
+  let touchEndX = e.changedTouches[0].screenX;
+  let touchEndY = e.changedTouches[0].screenY;
+  
+  if(Math.abs(touchEndX - touchStartX) > Math.abs(touchEndY - touchStartY) && Math.abs(touchEndX - touchStartX) > 40) {
+    if(!currentPage || !currentPage.startsWith('day-')) return;
+    let idx = DAYS.indexOf(currentPage.replace('day-',''));
+    if(idx === -1) return;
+    
+    if (touchEndX < touchStartX - 40 && idx < DAYS.length-1) {
+      switchPage('day-' + DAYS[idx+1]);
+    }
+    if (touchEndX > touchStartX + 40 && idx > 0) {
+      switchPage('day-' + DAYS[idx-1]);
+    }
+  }
+}, {passive:true});
 
 // ══════════════════════════════════════
 //  INIT
