@@ -415,8 +415,6 @@ nav::-webkit-scrollbar{display:none;}
 
 <nav id="nav"></nav>
 
-<div id="pages" style="display: contents;"></div>
-
 <!-- Lists page -->
 <div class="page" id="page-lists">
   <div class="new-list-form">
@@ -564,7 +562,6 @@ function snapshotToday(){
 //  BUILD NAV + PAGES
 // ══════════════════════════════════════
 const nav   = document.getElementById('nav');
-const pages = document.getElementById('pages');
 const todayDay = dayName(today());
 const todayDs  = todayStr();
 
@@ -581,7 +578,7 @@ DAYS.forEach(day=>{
   const pg = document.createElement('div');
   pg.className = 'page';
   pg.id = 'page-day-'+day;
-  pages.appendChild(pg);
+  document.body.insertBefore(pg, document.getElementById('page-lists'));
 });
 
 // Lists tab
